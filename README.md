@@ -6,6 +6,30 @@ This package is a service discovery adapter using consul services.
 
 npm install consul-adapter
 
+## Usage example without hexconnector
+
+```
+const serviceDiscovery = require('consul-adapter');
+
+const config = {
+    options: {
+        host: '127.0.0.1',
+        port: 8500
+    }
+};
+
+serviceDiscovery.initAdapter({}, config);
+
+serviceDiscovery.getAnEndpoint('serviceName')
+    .then((endpoint) => {
+        console.log(endpoint);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+
+```
+
 ## Usage example with hexconnector 1
 
 ```
@@ -23,7 +47,7 @@ const config = {
 
 serviceDiscovery.initAdapter(cn, config);
 
-cn.adapters.serviceDiscovery.getAnEndpoint('serviceName')
+serviceDiscovery.getAnEndpoint('serviceName')
     .then((endpoint) => {
         console.log(endpoint);
     })
