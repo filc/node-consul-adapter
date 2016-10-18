@@ -1,5 +1,5 @@
 var _ = require('lodash');
-var hostDiscovery = require('./lib/hostDiscovery');
+var hostDiscovery = require('./lib/host-discovery');
 
 var consul;
 

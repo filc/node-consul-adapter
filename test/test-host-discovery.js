@@ -1,7 +1,7 @@
 'use strict';
 
 var assert = require('assert');
-var hostDiscovery = require('../lib/hostDiscovery');
+var hostDiscovery = require('../lib/host-discovery');
 var mockery = require('mockery');
 var request = require('request');
 var network = require('network');
