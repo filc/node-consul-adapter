@@ -1,10 +1,14 @@
-var _ = require('underscore');
+var _ = require('lodash');
+var hostDiscovery = require('./lib/hostDiscovery');
 
 var consul;
 
 module.exports = {
     initAdapter: function (_connector, _config) {
-        consul = require('consul')(_config.options);
+        hostDiscovery.discoverHost(_config)
+          .then(function (config) {
+            consul = require('consul')(config.options);
+          });
     },
 
     getAnEndpoint: function (service) {
