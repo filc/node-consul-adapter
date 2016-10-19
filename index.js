@@ -11,16 +11,36 @@ module.exports = {
           });
     },
 
-    getAnEndpoint: function (service) {
+    getEndpoints: function (service) {
         return new Promise(function (resolve, reject) {
             consul.catalog.service.nodes(service, function(err, result) {
                 if (err) {
                     return reject(err);
                 }
 
-                _services = _.shuffle(result);
-                resolve(_services[0].Address + ':' + _services[0].ServicePort.toString());
+                var endpoints = _.map(result, function (serviceNode) {
+                    return serviceNode.Address + ':' + serviceNode.ServicePort.toString();
+                });
+                resolve(endpoints);
             });
         });
+    },
+
+    getAnEndpoint: function (service) {
+        return this.getEndpoints(service)
+          .then(function(endPoints) {
+              return _.sample(endPoints);
+          });
+
+        // return new Promise(function (resolve, reject) {
+        //     consul.catalog.service.nodes(service, function(err, result) {
+        //         if (err) {
+        //             return reject(err);
+        //         }
+        //
+        //         var _services = _.shuffle(result);
+        //         resolve(_services[0].Address + ':' + _services[0].ServicePort.toString());
+        //     });
+        // });
     }
 };
